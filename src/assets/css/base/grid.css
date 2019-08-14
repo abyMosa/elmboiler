@@ -1,0 +1,90 @@
+
+@import '../mixins/grid.css';
+@import '../_media-variables.css';
+
+@-ms-viewport {
+  width: device-width;
+ }
+ 
+ html {
+  box-sizing: border-box;
+  -ms-overflow-style: scrollbar;
+ }
+ 
+ *,
+ *::before,
+ *::after {
+  box-sizing: inherit;
+ }
+ 
+ .container {
+    @mixin make-container;
+    
+    @each $var, $width in (xl, rt), (1400px, 1800px) {
+        @media (--min-$(var)) {
+            &{
+                max-width: $width;
+            }
+        }
+    }
+   
+    &.container--fluid{
+        /* @mixin make-container; */
+        max-width: 100%;
+    }
+    &.container--stretch{
+        /* @mixin make-container; */
+        min-height: 100vh;
+        & > .layout{
+            min-height: 100vh;    
+        }
+    }
+ }
+ 
+ .layout {
+    @mixin make-layout;
+    @for $gut from 1 to 3{
+        @each $var in xs, sm, md, lg, xl{
+            @media (--min-$(var)) {
+                @for $val from 1 to 11 {
+                    &.gutter-$(gut) > .col--$(var)--$(val){
+                        @mixin make-col-with-gutter $val, $gut;
+                    }
+                }
+            }    
+        }
+    }
+ }
+ 
+ [class*="col--"] {
+    @mixin make-col-ready;
+ }
+ 
+ .col {
+    /* display: flex; */
+    /* flex-grow: 1; */
+    max-width: 100%;   
+    /* align-items: flex-start; */
+    justify-content: flex-start;
+      
+    @each $var in xs, sm, md, lg, xl{
+        @media (--min-$(var)) {
+            @for $val from 1 to 12 {
+                &--$(var)--$(val) {
+                    @mixin make-col $val;
+                }
+            }
+        }
+    }      
+}
+
+/* 
+.container {
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap;
+    flex-direction: row;
+    height: 100%;
+    padding: 0;
+}
+} */

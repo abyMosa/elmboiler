@@ -1,0 +1,66 @@
+/* BUTTON */
+@import '../mixins/button.css';
+button, [type="button"], [type="reset"], [type="submit"], [role="button"] {
+    cursor: pointer;
+}
+.ab-btn{
+    @mixin set-btn;
+    &.ab-btn--flat{ box-shadow: none; }
+    &:before { @mixin set-before-psudo; }
+    &:after { @mixin set-after-psudo; }
+    &:active:after { @mixin set-active-after-psudo; }
+    /* &:hover{ background-color: #DCDCDC; } */
+    &:hover{ background-color: silver; }
+
+    @each $size in large, small, xs{
+        &.ab-btn--$(size){
+            @mixin set-$(size)-btn;
+        }
+    }
+
+    &:not(.ab-btn--flat):not(.ab-btn--depressed):active:not(.ab-btn--outline) {
+        box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12);
+        background-color: #adadad;
+    }
+    &.ab-btn--block {
+        display: flex;
+        flex: 1;
+        margin: 6px 0;
+        width: 100%;
+    }
+    &:not(.ab-btn--outline).primary, &:not(.ab-btn--outline).dark, &:not(.ab-btn--outline).accent, &:not(.ab-btn--outline).success, &:not(.ab-btn--outline).error, &:not(.ab-btn--outline).warning, &:not(.ab-btn--outline).indigo, &:not(.ab-btn--outline).info{ 
+        color: #fff; 
+    }
+    
+    &.ab-btn--outline{
+        background: transparent !important;
+        box-shadow: none;
+        border: 1px solid #adadad;
+        &:hover{
+            box-shadow: none;
+            background-color: rgba(#adadad, .3)!important;
+        }
+    }
+
+    @each $theme, $val in (primary, error, success, info, warning, dark, indigo), (#1867c0, #ff5252, #4caf50, #2196f3, #fb8c00, #212121, #3f51b5){
+        &.$(theme){
+            background-color: $(val)!important;
+            border-color: $(val)!important;
+            &:hover{
+                background-color: rgba($(val), .9)!important;
+            }
+            &:active:before{
+                background-color: rgba(255, 255, 255, 0.2);
+                opacity: 1;
+            }
+            &.ab-btn--outline{
+                background: transparent !important;
+                border: 1px solid $(val);
+                color: $(val);
+                &:hover{
+                    background-color: rgba($(val), .3)!important;
+                }
+            }
+        }
+    }
+}

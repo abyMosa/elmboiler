@@ -1,0 +1,25 @@
+.df{
+    display: flex;
+}
+.f-jc{
+    @each $type, $val in (start, end, center, sb), ( flex-start, flex-end, center, space-between ){
+        &-$(type){
+            justify-content: $val;
+        }
+    }
+}
+.f-aa{
+    @each $type, $val in (start, end, center, sb), ( flex-start, flex-end, center, space-between ){
+        &-$(type){
+            align-items: $val;
+        }
+    }
+}
+
+.f-fd{
+    @each $type in (column, row){
+        &-$(type){
+            flex-direction: $type;
+        }
+    }
+}

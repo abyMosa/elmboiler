@@ -1,0 +1,36 @@
+
+    @define-mixin make-container {
+        margin-right: auto;
+        margin-left: auto;
+        /* padding-right: 15px;
+        padding-left:  15px; */
+        display: flex;
+        flex-direction: column;
+        max-width: 1200px;
+        width: 100%;
+    }
+
+    @define-mixin make-layout {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    @define-mixin make-col-ready {
+        position: relative;
+        width: 100%;
+        min-height: 1px;
+        /* flex-direction: column; */
+    }
+
+    @define-mixin make-col $size{
+        flex-basis: calc( ($size / 12) * 100% );
+        max-width: calc( ($size / 12) * 100% );
+    } 
+
+    @define-mixin make-col-with-gutter $size, $gutter{
+        flex-basis: calc( ( ($size / 12) * 100% ) - $(gutter)*5px );
+        max-width: calc( ( ($size / 12) * 100% ) - $(gutter)*5px );
+    }

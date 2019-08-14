@@ -1,0 +1,62 @@
+@import '../_media-variables.css';
+
+.p{
+    @each $type, $val in (a, t, r, b, l), ( , -top, -right, -bottom, -left){
+        @each $var, $i in 0, 4, 8, 16, 24, 48 {
+            &$(type)-$(i){
+                padding$(val): $(var)px!important;
+            }
+        }
+    }
+    @each $type in x, y{
+        @each $var, $i in 0, 4, 8, 16, 24, 48 {
+            &$(type)-$(i){
+                @if $type == x{
+                    padding-right: $(var)px!important;
+                    padding-left: $(var)px!important;
+                }@else if $type == y {
+                    padding-top: $(var)px!important;
+                    padding-bottom: $(var)px!important;
+                }
+            }
+        }
+    }
+    
+}
+
+.m{
+    @each $type, $val in (a, t, r, b, l), ( , -top, -right, -bottom, -left){
+        @each $var, $i in 0, 4, 8, 16, 24, 48 {
+            &$(type)-$(i){
+                margin$(val): $(var)px!important;
+            }
+        }
+    }
+    @each $type in x, y{
+        @each $var, $i in 0, 4, 8, 16, 24, 48 {
+            &$(type)-$(i){
+                @if $type == x{
+                    margin-right: $(var)px!important;
+                    margin-left: $(var)px!important;
+                }@else if $type == y {
+                    margin-top: $(var)px!important;
+                    margin-bottom: $(var)px!important;
+                }
+            }
+        }
+    }
+    
+}
+
+
+.text-align{
+    @each $var in xs, sm, md, lg, xl{
+        @each $sym, $dir in (r, l), (right, left){
+            @media (--min-$(var)) {
+                &-$(var)-$(sym){
+                    text-align: $(dir);
+                }
+            }
+        }
+    }
+}

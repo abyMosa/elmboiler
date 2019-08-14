@@ -1,0 +1,136 @@
+
+.ab-checkbox-wrap{
+    display: inline-block;
+    margin-right: 20px;
+    
+    &.ab-checkbox-block{
+        /* flex-wrap: wrap; */
+        display: flex;
+    }
+    label{
+        width: auto;
+        cursor: pointer;
+        font-weight: 500;
+        font-family: CoHeadlineRg, sans-serif !important;
+        text-transform: uppercase;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 7px;
+        .label-holder{
+            font-size: 13px;
+        }
+    }
+
+    .ab-checkbox{
+        appearance: none;
+        position: relative;
+        top: 0px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 15px;
+        width: 15px;
+        transition: all 0.15s ease-out 0s;
+        border: 2px solid rgba(0, 0, 0, 0.54);
+        border-radius: 2px;
+        color: #fff;
+        cursor: pointer;
+        display: inline-block;
+        margin-right: 1rem;
+        outline: none;
+        z-index: 80;
+        
+        &::before {
+            position: absolute;
+            content: '';
+            height: 25px;
+            width: 25px;
+            /* border-radius: 50%; */
+            top:50%;
+            left: 50%;
+            transform: translate( -50%, -50% );
+            display: inline-block;
+            text-align: center;
+            line-height: 24px;
+        }
+        &:hover{
+            border: 2px solid #adadad;
+        }
+        &:checked{
+            border: 2px solid #adadad;
+        }
+        &:hover:before{
+            background: rgba(#adadad, .3);
+        }
+    
+        &:checked{
+            background: #adadad;
+            color: black;
+            &::before {
+                content: '\2714';
+            }
+    
+            &::after{
+                animation: click-wave 0.65s;
+                background: #adadad;
+                content: '';
+                display: block;
+                position: relative;
+                z-index: 100;
+            }
+        }
+    
+        @each $theme, $val in (primary, error, success, info, warning, dark, indigo), (#1867c0, #ff5252, #4caf50, #2196f3, #fb8c00, #212121, #3f51b5){
+            &.$(theme){
+                &:hover{
+                    border: 2px solid $(val);
+                }
+                &:checked{
+                    border: 2px solid $(val);
+                }
+                &:hover:before{
+                    background: rgba($(val), .3);
+                }
+                &:checked{
+                    background: $(val);
+                    color: white;
+                    &::before {
+                        content: '\2714';
+                    }
+            
+                    &::after{
+                        animation: click-wave 0.65s;
+                        background: $(val);
+                        content: '';
+                        display: block;
+                        position: relative;
+                        z-index: 100;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+@keyframes click-wave {
+    0% {
+        height: 25px;
+        width: 25px;
+        transform: scale(0);
+        opacity: 0.55;
+        position: relative;
+      }
+      
+      100% {
+        width: 45px;
+        height: 45px;
+        margin-left: -18px;
+        margin-top: -18px;
+        transform: scale(1);
+
+        opacity: 0;
+      }
+}

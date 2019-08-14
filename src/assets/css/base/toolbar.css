@@ -1,0 +1,89 @@
+.ab-toolbar{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    /* padding: 10px; */
+    background-color: #FFFFFF;
+    /* border-bottom: 1px dotted rgba(0,0,0,.1); */
+    min-height: 64px;
+    transition: 2.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.fixed{
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        z-index: 90;
+    }
+
+    &.ab-toolbar--small{
+        min-height: 40px;
+        p{
+            margin: 0px;
+        }
+        img{
+            width: 23px;
+            height: auto;
+        }
+    }
+    
+    &.ab-toolbar--large{
+        min-height: 100px;
+        img{
+            width: 200px;
+            height: auto;
+        }
+    }
+    
+    &.ab-toolbar-elivated{
+        box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12) !important;
+    }
+    &.ab-toolbar-elivated2{
+        box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12);
+    }
+
+    @each $theme, $val in (primary, error, success, info, warning, dark, indigo, hrp, hcp, tol, bh, kp, kew, hcg, darkGrey), (#1867c0, #ff5252, #4caf50, #2196f3, #fb8c00, #212121, #3f51b5, #000, #107aab, #77776e, #fab730, #e61441, #62c5c1, #5576b4, #333 ){
+        &.$(theme){
+            background-color: $(val)!important;
+            color: #000;
+            @if $theme != bh{
+                color: #fff;
+            }
+            border-color: $(val)!important;
+            &:hover{
+                background-color: rgba($(val), .9)!important;
+            }
+        }
+    }
+    
+    @each $theme, $val in ( hcp, tol, bh, kp, kew, hcg), (#107aab, #77776e, #fab730, #e61441, #62c5c1, #5576b4){
+        a{
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            
+
+            &:before{
+                content: '';
+                position: absolute;
+                bottom:0px;
+                left: 0px;
+                width: 100%;
+                height: 4px;
+                z-index: -1;
+                transition: all .2s cubic-bezier(0.4, 0, 0.2, 1);
+                
+            }
+            &.$(theme){
+                &:before{
+                    background-color: $(val);
+                }
+                &:hover:before, &.active:before{
+                    height: 100%;
+                }
+            }
+        }
+        
+    }
+}

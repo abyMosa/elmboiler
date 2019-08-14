@@ -1,0 +1,39 @@
+/* src url path has to be relative to PostCss output file */
+
+/* first for IE 4–8 */
+@font-face {
+    font-family: CoHeadlineLt;
+    src: url("./assets/fonts/CoHeadline/CoHeadline_LtWeb.eot");
+  }
+  
+  @font-face {
+    font-family: CoHeadlineBd;
+    src: url('./assets/fonts/CoHeadline/CoHeadline_BdWeb.eot');
+  }
+  
+  @font-face {
+    font-family: CoHeadlineRg;
+    src: url("./assets/fonts/CoHeadline/CoHeadline_RgWeb.eot");
+  }
+  
+  /* then for WOFF-capable browsers */
+  @font-face {
+    font-family: CoHeadlineLt;
+    src: url("./assets/fonts/CoHeadline/CoHeadline_LtWeb.woff") format("woff");
+  }
+  
+  @font-face {
+    font-family: CoHeadlineBd;
+    src: url("./assets/fonts/CoHeadline/CoHeadline_BdWeb.woff") format("woff");
+  }
+  
+  @font-face {
+    font-family: CoHeadlineRg;
+    src: url('./assets/fonts/CoHeadline/CoHeadline_RgWeb.woff') format("woff");
+  }
+
+
+.thin {
+    font-family: CoHeadlineLt,sans-serif!important;
+    color: #262626;
+}

@@ -1,0 +1,63 @@
+.wobbly-accordeon {
+    transition-timing-function: cubic-bezier(0.190, 1.000, 0.220, 1.000);
+}
+.radio_input_wrapper{
+    min-height: 45px;
+    position: relative;
+    cursor: pointer;
+    transition: all .2s ease-out;
+    width: 100%;
+    border-bottom: none;
+}
+.radio_input_wrapper > label{
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 50px;
+    position: relative;
+    cursor: pointer;
+    padding-left: 35px;
+    border: 1px solid #d9d9d9;
+    font-size: 87%;
+}
+.accordian_wrap .IpRadioAccordian:first-of-type label{
+    border-radius: 5px 5px 0px 0px;
+}
+.accordian_wrap .IpRadioAccordian:last-of-type :not(.selected) label{
+    border-radius: 0px 0px 5px 5px;
+}
+.accordian_wrap .IpRadioAccordian:last-of-type label{
+    border-top: 0px;
+}
+.radio_input_wrapper .accordian_content{
+    padding: 10px;
+    background-color: #fafafa;
+    border-right: 1px solid #d9d9d9;
+    border-left: 1px solid #d9d9d9;
+    border-bottom: 1px solid #d9d9d9;
+}
+.radio_input_wrapper .accordian_content.empty{
+    padding: 0px;
+}
+.accordian_wrap .IpRadioAccordian:last-of-type .accordian_content{
+    border-radius: 0px 0px 4px 4px;
+}
+.radio_input_wrapper .radio_title, .radio_input_wrapper .radio_cost{
+    color: black;
+    font-weight: 500;
+}
+input[type='radio'] {
+    display: block!important;
+}
+.radio_input_wrapper input[type='radio']{
+    position: absolute;
+    top: 45%;
+    left: 12px;
+    transform: translateY(-50%);
+}
+.react-slidedown.my-dropdown-slidedown {
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.190, 1.000, 0.220, 1.000);
+}
