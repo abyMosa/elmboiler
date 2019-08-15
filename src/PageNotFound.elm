@@ -1,10 +1,10 @@
-module About exposing (..)
+module PageNotFound exposing (Msg(..), view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
 
 type Msg
-    = NoOp
+    = NotFoundMsg
 
 type alias Model = 
     { title: String }
@@ -14,4 +14,4 @@ type alias Model =
 
 view : Html Msg
 view =
-    div[][text "About"]
+    div[][text "Page not found"]
