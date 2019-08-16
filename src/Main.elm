@@ -13,6 +13,7 @@ import Home as Home
 import About as About
 import PageNotFound as NotFound
 import Layouts.DefaultLayout as DefaultLayout exposing (..)
+import Layouts.EmptyLayout as EmptyLayout exposing (..)
 
 ---- MODEL ----
 type alias Model =
@@ -63,30 +64,26 @@ update msg model =
             )
 
     PageNotFound _ ->
-        ( model
-        , Cmd.none
-        )
+        ( model , Cmd.none )
 
     PageHome _ ->
-        ( model
-        , Cmd.none
-        )
+        ( model , Cmd.none )
 
     PageAbout _ ->
-        ( model
-        , Cmd.none
-        )
+        ( model , Cmd.none )
 
 ---- VIEW ----
 view : Model -> Browser.Document Msg
 view model =
     case model.route of
         NotFound notfound ->
-            DefaultLayout.view PageNotFound (NotFound.view notfound)
+            EmptyLayout.view PageNotFound (NotFound.view notfound)
         Home home ->
             DefaultLayout.view PageHome (Home.view home)
         About about -> 
             DefaultLayout.view PageAbout (About.view about)
+        
+        -- 
 
 
 -- SUBSCRIPTION
