@@ -31,9 +31,111 @@
     font-family: CoHeadlineRg;
     src: url('./assets/fonts/CoHeadline/CoHeadline_RgWeb.woff') format("woff");
   }
-
+  @font-face {
+    font-family: 'Tiempos Headline Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Tiempos Headline Regular'), url('./assets/fonts/Tiempos/TiemposHeadline-Regular.woff') format('woff');
+    }
+    
+    
+    @font-face {
+    font-family: 'Tiempos Headline Regular Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Tiempos Headline Regular Italic'), url('./assets/fonts/Tiempos/TiemposHeadline-RegularItalic.woff') format('woff');
+    }
+    
+    
+    @font-face {
+    font-family: 'Tiempos Headline Light';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Tiempos Headline Light'), url('./assets/fonts/Tiempos/TiemposHeadline-Light.woff') format('woff');
+    }
+    
+    
+    @font-face {
+    font-family: 'Tiempos Headline Light Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Tiempos Headline Light Italic'), url('./assets/fonts/Tiempos/TiemposHeadline-LightItalic.woff') format('woff');
+    }
+    
+    
+    @font-face {
+    font-family: 'Tiempos Headline Medium';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Tiempos Headline Medium'), url('./assets/fonts/Tiempos/TiemposHeadline-Medium.woff') format('woff');
+    }
+    
+    
+    @font-face {
+    font-family: 'Tiempos Headline Medium Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Tiempos Headline Medium Italic'), url('./assets/fonts/Tiempos/TiemposHeadline-MediumItalic.woff') format('woff');
+    }
+    
+    
+    @font-face {
+    font-family: 'Tiempos Headline Semibold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Tiempos Headline Semibold'), url('./assets/fonts/Tiempos/TiemposHeadline-Semibold.woff') format('woff');
+    }
+    
+    
+    @font-face {
+    font-family: 'Tiempos Headline Semibold Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Tiempos Headline Semibold Italic'), url('./assets/fonts/Tiempos/TiemposHeadline-SemiboldItalic.woff') format('woff');
+    }
+    
+    
+    @font-face {
+    font-family: 'Tiempos Headline Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Tiempos Headline Bold'), url('./assets/fonts/Tiempos/TiemposHeadline-Bold.woff') format('woff');
+    }
+    
+    
+    @font-face {
+    font-family: 'Tiempos Headline Bold Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Tiempos Headline Bold Italic'), url('./assets/fonts/Tiempos/TiemposHeadline-BoldItalic.woff') format('woff');
+    }
+    
+    
+    @font-face {
+    font-family: 'Tiempos Headline Black';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Tiempos Headline Black'), url('./assets/fonts/Tiempos/TiemposHeadline-Black.woff') format('woff');
+    }
+    
+    
+    @font-face {
+    font-family: 'Tiempos Headline Black Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Tiempos Headline Black Italic'), url('./assets/fonts/Tiempos/TiemposHeadline-BlackItalic.woff') format('woff');
+    }
 
 .thin {
     font-family: CoHeadlineLt,sans-serif!important;
+    color: #262626;
+}
+.tiempos{
+  font-family: 'Tiempos Headline Light'!important;
+    color: #262626;
+}
+
+.tiempos.bold{
+  font-family: 'Tiempos Headline Semibold'!important;
     color: #262626;
 }

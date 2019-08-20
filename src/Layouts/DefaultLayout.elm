@@ -1,32 +1,67 @@
 module Layouts.DefaultLayout exposing (..)
 
+import About as About
 
 import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Json.Decode as D
+import Json.Decode as Decode
 
-type alias Details msg =
-    { title : String
-    , attrs : List (Attribute msg)
-    , kids : List (Html msg)
+import Routes
+
+
+type alias Model =
+    { aboutModel : About.Model
+    , isHeaderFixed : Bool
+    , headerHeight : Float
+    , footerHeight : Float
     }
 
+type Msg
+    = AboutMsg About.Msg
+    | CompLoaded Float Float
 
 
--- VIEW
-view : (a -> msg) -> Details a -> Browser.Document msg
-view toMsg details =
-    { title =
-        details.title
-    , body =
-        [ viewHeader 
-        , Html.map toMsg <|
-            div (class "center" :: details.attrs) details.kids
-        , viewFooter
-        ]
+
+-- https://stackoverflow.com/questions/48551782/elm-get-the-size-of-an-image
+init : Model
+init =    
+    { aboutModel = About.init
+    ,isHeaderFixed = False
+    , headerHeight = 0.0
+    , footerHeight = 0.0
     }
 
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        CompLoaded header footer ->
+            ({ model | headerHeight = header, footerHeight = footer } , Cmd.none)
+
+        _ ->
+            (model, Cmd.none)
+
+
+-- VIEW 
+view : Routes.Route -> Model -> Html Msg
+view route model =
+    let
+        viewPage toMsg pageView pageModel =
+            Html.map toMsg <| pageView pageModel
+        
+        kids = 
+            case route of
+                Routes.About ->
+                    viewPage AboutMsg About.view model.aboutModel
+                _ -> 
+                    div[][text ""]
+                    
+    in    
+    div [ class "center app" ]
+    [ viewHeader
+    , div[class "defaultlayout"] [ kids ]
+    , viewFooter
+    ]
 
 -- VIEW HEADER
 viewHeader : Html msg

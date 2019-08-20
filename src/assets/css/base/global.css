@@ -2,6 +2,8 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
 *{
     box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
 }
 body {
     margin: 0;
@@ -71,4 +73,7 @@ img{
         transition: 0s;
     }
 }
-
+/* 
+h1, h2{
+    font-family: 'Tiempos Headline Light'!important;
+} */

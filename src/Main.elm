@@ -6,8 +6,7 @@ import Html.Attributes exposing (src, class, href)
 
 import Browser.Navigation as Navigation
 import Url
-import Url.Parser as Url exposing (Parser, (</>), custom, fragment, map, oneOf, s, top)
-import Url.Parser.Query as Query
+import Routes
 
 import Home as Home
 import About as About
@@ -15,34 +14,38 @@ import PageNotFound as NotFound
 import Layouts.DefaultLayout as DefaultLayout exposing (..)
 import Layouts.EmptyLayout as EmptyLayout exposing (..)
 
+
 ---- MODEL ----
 type alias Model =
-    { route: Route
+    { title : String
+    , route: Routes.Route
     , key : Navigation.Key
+    , defaultLayoutModel: DefaultLayout.Model
+    , emptyLayoutModel: EmptyLayout.Model
     }
-
-type Route
-    = Home Home.Model
-    | About About.Model
-    | NotFound NotFound.Model
-
 
 init : () -> Url.Url -> Navigation.Key -> ( Model, Cmd Msg )
 init _ url key =
+    let
+        title = getTitleFromRoute url
+    in
     ( 
-      { route = matchedRoute url
-      , key = key 
+      { title = title
+      , route = Routes.matchedRoute url
+      , key = key
+      , defaultLayoutModel = DefaultLayout.init
+      , emptyLayoutModel = EmptyLayout.init
       }
     , Cmd.none
+        
     )
 
 ---- UPDATE ----
 type Msg
     = UrlRequested Browser.UrlRequest
     | UrlChanged Url.Url
-    | PageNotFound NotFound.Msg
-    | PageHome Home.Msg
-    | PageAbout About.Msg
+    | DefaultLayoutMsg DefaultLayout.Msg
+    | EmptyLayoutMsg EmptyLayout.Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -59,31 +62,36 @@ update msg model =
           ( model, Navigation.load href )
 
     UrlChanged url ->
-            ( { model | route = matchedRoute url }
+            ( { model | route = Routes.matchedRoute url }
             , Cmd.none
             )
+    DefaultLayoutMsg _ -> 
+        (model, Cmd.none)
+    
+    EmptyLayoutMsg _ -> 
+        (model, Cmd.none)
 
-    PageNotFound _ ->
-        ( model , Cmd.none )
-
-    PageHome _ ->
-        ( model , Cmd.none )
-
-    PageAbout _ ->
-        ( model , Cmd.none )
 
 ---- VIEW ----
 view : Model -> Browser.Document Msg
 view model =
-    case model.route of
-        NotFound notfound ->
-            EmptyLayout.view PageNotFound (NotFound.view notfound)
-        Home home ->
-            DefaultLayout.view PageHome (Home.view home)
-        About about -> 
-            DefaultLayout.view PageAbout (About.view about)
-        
-        -- 
+    let
+        viewLayout toMsg layoutView layoutModel =
+            Html.map toMsg <| layoutView model.route layoutModel
+    in
+    { title =
+        model.title
+    , body = 
+        [
+            case model.route of
+                -- here goes other routes that uses different layout, by default every route will use DefaultLayout 
+                Routes.Home -> 
+                    viewLayout EmptyLayoutMsg EmptyLayout.view model.emptyLayoutModel
+
+                _ -> 
+                    viewLayout DefaultLayoutMsg DefaultLayout.view model.defaultLayoutModel
+        ]
+    }
 
 
 -- SUBSCRIPTION
@@ -105,20 +113,12 @@ main =
         }
         
 
--- HELPERS
-matchRoute : Url.Parser (Route -> a) a
-matchRoute =   
-    Url.oneOf
-        [ Url.map (About About.init) <| Url.s "about"
-        , Url.map ( Home Home.init) <| Url.top
-        ]
-
-
-matchedRoute : Url.Url -> Route
-matchedRoute url =
-    case Url.parse matchRoute url of
-        Just route -> 
-            route
-
-        Nothing ->
-            NotFound NotFound.init
+getTitleFromRoute : Url.Url -> String
+getTitleFromRoute url =
+    case Routes.matchedRoute url of
+        Routes.NotFound ->   
+            "Not Found"
+        Routes.Home ->
+            "home"
+        Routes.About ->
+            "abouit"

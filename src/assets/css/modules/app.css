@@ -1,0 +1,15 @@
+.app{
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0px auto;
+    
+    /* min-height: 100vh; */
+}
+.app.emptylayout{
+    min-height: 100vh;
+    background-color: #e5e5e5;
+}
+
+.defaultlayout{
+    min-height: 100vh;
+}
