@@ -22,10 +22,23 @@ type Msg
 
 
 init : Model
-init =    
-    { homeModel = Home.init
+init =
+    let
+        ( homeModel, subCmd ) = Home.init          
+    in
+        
+    { homeModel = homeModel
     , notFoundModel = NotFound.init
     }
+
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        HomeMsg home ->
+            
+        
+            
+
 
 
 -- VIEW 
@@ -45,7 +58,7 @@ view route model =
                 _ -> 
                     div[][text ""]
                     
-    in    
+    in
     div [ class "center app emptylayout" ]
     [ kids
     ]

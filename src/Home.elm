@@ -12,28 +12,76 @@ import Components.UI.Col as Col
 import Components.UI.Form.Text as TextInput
 
 type alias Model =
-    { title : String
+    { currentEntry : Entry
+    , error : Error
     , titleInput : TextInput.Model 
     }
 
-type Msg
-    = NoOp
-    | TitleInputMsg TextInput.Msg
+type Error
+    = Title String
+    | Content String
+    | Both { content : String, title : String }
+    | NoErrors
 
-
-init : Model
-init = 
-    { title = "Home"
-    , titleInput = TextInput.init 
+type alias Entry =
+    { title : String
+    , content: String
+    , status : EntryStatus 
     }
+
+type EntryStatus 
+    = InProgress 
+    | Complete
+    | Blocked
+    | Invalid
+
+
+type Msg
+    = TitleInputMsg TextInput.Msg
+
+
+init : ( Model, Cmd Msg )
+init = 
+    (
+        { currentEntry = newEntry
+        , error = NoErrors
+        , titleInput = TextInput.init 
+        }
+    , Cmd.none
+    )
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    ( model, Cmd.none)
+    case msg of
+        TitleInputMsg subMsg ->
+            let
+                ( subModel, subCmd, extMsg ) =
+                    TextInput.update subMsg model.titleInput
+
+                updateFn =
+                    case extMsg of
+                        TextInput.ValueUpdated (Just title) ->
+                            updateCurrentEntryTitle title
+
+                        TextInput.ValueUpdated Nothing ->
+                            updateCurrentEntryTitle "" << updateCurrentEntryStatus Invalid
+            in
+            ( { model
+                | titleInput = subModel
+                , currentEntry = updateFn model.currentEntry
+              }
+            , Cmd.map TitleInputMsg subCmd
+            )
 
 
 view : Model -> Html Msg
 view model =
+    let
+        ( titleErrorMsg, contentErrorMsg ) =
+            ( getTitleErrorMessage model.error
+            , getContentErrorMessage model.error
+            )
+    in
     Container.view (Container.Config [ class "full-vh" ] 
     [
         Row.view (Row.Config [ class " full-vh" ]
@@ -43,10 +91,65 @@ view model =
             , 
                 div [class "text-align-sm-l mt-5"]
                 [ p[] [ text "Add new task" ]
-                        
-
+                , Html.map TitleInputMsg 
+                    <| TextInput.view model.titleInput
+                        { placeholder = "Enter a value"
+                        , validationRules =
+                            { lengthRules = TextInput.EmptyAllowed
+                            , valueRules = TextInput.Alphanumeric
+                            , textFormat = Just TextInput.Lowercase
+                            }
+                        }
                 ]
 
             ])
         ])
     ])
+
+
+
+
+newEntry : Entry
+newEntry = Entry "" "" InProgress
+
+updateCurrentEntryTitle : String -> Entry -> Entry
+updateCurrentEntryTitle str entry = 
+    { entry | title = str }
+
+updateCurrentEntryContent : String -> Entry -> Entry
+updateCurrentEntryContent str entry = 
+    { entry | content = str }
+
+
+updateCurrentEntryStatus : EntryStatus -> Entry -> Entry
+updateCurrentEntryStatus status entry =
+    { entry | status = status }
+
+
+updateEntries : Entry -> List Entry -> List Entry
+updateEntries entry entries = 
+    List.append (List.singleton entry) entries
+
+
+
+getTitleErrorMessage : Error -> Maybe String
+getTitleErrorMessage error =
+    case error of
+        Both { title } ->
+            Just title
+        Title err ->
+            Just err
+        _ ->
+            Nothing
+
+
+getContentErrorMessage : Error -> Maybe String
+getContentErrorMessage error =
+    case error of
+        Both { content } ->
+            Just content
+        Content err ->
+            Just err
+        _ ->
+            Nothing
+

@@ -37,7 +37,6 @@ init _ url key =
       , emptyLayoutModel = EmptyLayout.init
       }
     , Cmd.none
-        
     )
 
 ---- UPDATE ----
@@ -66,7 +65,8 @@ update msg model =
             , Cmd.none
             )
     DefaultLayoutMsg _ -> 
-        (model, Cmd.none)
+        (
+            model, Cmd.none)
     
     EmptyLayoutMsg _ -> 
         (model, Cmd.none)
@@ -87,7 +87,6 @@ view model =
                 -- here goes other routes that uses different layout, by default every route will use DefaultLayout 
                 Routes.Home -> 
                     viewLayout EmptyLayoutMsg EmptyLayout.view model.emptyLayoutModel
-
                 _ -> 
                     viewLayout DefaultLayoutMsg DefaultLayout.view model.defaultLayoutModel
         ]
@@ -121,4 +120,4 @@ getTitleFromRoute url =
         Routes.Home ->
             "home"
         Routes.About ->
-            "abouit"
+            "about"

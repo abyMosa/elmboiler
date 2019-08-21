@@ -85,6 +85,8 @@ view model config =
     let
         errorMessage =
             validate config.validationRules model.value
+
+        _ = Debug.log "errors" errorMessage
     in
     div [ class "input-group" ]
         [ input [ type_ "text", onInput (HandleInput config.validationRules), placeholder config.placeholder ] []

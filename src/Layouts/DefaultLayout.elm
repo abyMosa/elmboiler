@@ -5,6 +5,7 @@ import About as About
 import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (on)
 import Json.Decode as Decode
 
 import Routes
@@ -19,24 +20,34 @@ type alias Model =
 
 type Msg
     = AboutMsg About.Msg
-    | CompLoaded Float Float
+    | HeaderLoaded Float
+    | FooterLoaded Float
 
 
 
 -- https://stackoverflow.com/questions/48551782/elm-get-the-size-of-an-image
+-- init : ( Model, Cmd Msg )
 init : Model
 init =    
-    { aboutModel = About.init
-    ,isHeaderFixed = False
-    , headerHeight = 0.0
-    , footerHeight = 0.0
-    }
+    -- ( 
+        { aboutModel = About.init
+        ,isHeaderFixed = False
+        , headerHeight = 0.0
+        , footerHeight = 0.0
+        }
+    -- , Cmd.none
+    -- )
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        CompLoaded header footer ->
-            ({ model | headerHeight = header, footerHeight = footer } , Cmd.none)
+        HeaderLoaded header ->
+            let
+                _ = Debug.log "header" header
+            in
+            ({ model | headerHeight = header } , Cmd.none)
+        FooterLoaded footer ->
+            ({ model | footerHeight = footer } , Cmd.none)
 
         _ ->
             (model, Cmd.none)
@@ -56,19 +67,24 @@ view route model =
                 _ -> 
                     div[][text ""]
                     
-    in    
+    in
     div [ class "center app" ]
     [ viewHeader
     , div[class "defaultlayout"] [ kids ]
     , viewFooter
     ]
 
+
+decodeHeader msg =
+    Decode.map msg <|
+        Decode.field "target" <|
+                (Decode.field "height" Decode.float)
+
+
 -- VIEW HEADER
-viewHeader : Html msg
+viewHeader : Html Msg
 viewHeader =
-  div
-    [ style "backgroundColor" "#eeeeee"
-    ]
+    div [ style "backgroundColor" "#eeeeee", on "load" (decodeHeader HeaderLoaded) ]
     [ div [class "center"]
         [ h1 [ class "header", style "margin" "0px" ] [ text "Header" ]
         , ul []

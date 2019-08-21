@@ -58,6 +58,11 @@
                     &.gutter-$(gut) > .col--$(var)--$(val){
                         @mixin make-col-with-gutter $val, $gut;
                     }
+                    &.fstart-gutter-$(gut) {
+                        & > .col--$(var)--$(val){
+                            @mixin make-col-with-fstart-gutter $val, $gut;
+                        }
+                    }
                 }
             }    
         }
