@@ -19,6 +19,7 @@ import Layouts.EmptyLayout as EmptyLayout exposing (..)
 type alias Model =
     { route: Route
     , key : Navigation.Key
+    , homeModel : Home.Model
     }
 
 type Route
@@ -32,6 +33,7 @@ init _ url key =
     ( 
       { route = matchedRoute url
       , key = key 
+      , homeModel = Home.init
       }
     , Cmd.none
     )
@@ -66,8 +68,12 @@ update msg model =
     PageNotFound _ ->
         ( model , Cmd.none )
 
-    PageHome _ ->
-        ( model , Cmd.none )
+    PageHome homeMsg ->
+        let            
+            ( subModel, subCmd ) =
+                Home.update homeMsg model.homeModel  
+        in        
+        ( { model | homeModel = subModel }, Cmd.map PageHome subCmd )
 
     PageAbout _ ->
         ( model , Cmd.none )
@@ -79,7 +85,7 @@ view model =
         NotFound notfound ->
             EmptyLayout.view PageNotFound (NotFound.view notfound)
         Home home ->
-            DefaultLayout.view PageHome (Home.view home)
+            DefaultLayout.view PageHome (Home.view model.homeModel)
         About about -> 
             DefaultLayout.view PageAbout (About.view about)
         
