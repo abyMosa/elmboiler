@@ -1,40 +1,31 @@
 module Main exposing (..)
-
 import Browser
 import Html exposing (Html, text, div, h1, img, b, a, ul, li)
 import Html.Attributes exposing (src, class, href)
-
 import Browser.Navigation as Navigation
 import Url
 import Routes
-
-import Home as Home
-import About as About
-import PageNotFound as NotFound
-import Layouts.DefaultLayout as DefaultLayout exposing (..)
-import Layouts.EmptyLayout as EmptyLayout exposing (..)
-
+import Content exposing (..)
 
 ---- MODEL ----
 type alias Model =
     { title : String
     , route: Routes.Route
     , key : Navigation.Key
-    , defaultLayoutModel: DefaultLayout.Model
-    , emptyLayoutModel: EmptyLayout.Model
+    , contentModel : Content.Model
     }
 
 init : () -> Url.Url -> Navigation.Key -> ( Model, Cmd Msg )
 init _ url key =
     let
         title = getTitleFromRoute url
+        ( contentModel, contentCmd ) = Content.init
     in
     ( 
       { title = title
       , route = Routes.matchedRoute url
       , key = key
-      , defaultLayoutModel = DefaultLayout.init
-      , emptyLayoutModel = EmptyLayout.init
+      , contentModel = contentModel
       }
     , Cmd.none
     )
@@ -43,55 +34,44 @@ init _ url key =
 type Msg
     = UrlRequested Browser.UrlRequest
     | UrlChanged Url.Url
-    | DefaultLayoutMsg DefaultLayout.Msg
-    | EmptyLayoutMsg EmptyLayout.Msg
-
+    | ContentMsg Content.Msg
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-  case msg of
-    UrlRequested urlRequest ->
-      case urlRequest of
-        Browser.Internal url ->
-          ( model
-          , Navigation.pushUrl model.key (Url.toString url) 
-          )
+    case msg of
+        UrlRequested urlRequest ->
+            case urlRequest of
+                Browser.Internal url ->
+                    ( model
+                    , Navigation.pushUrl model.key (Url.toString url) 
+                    )
 
-        Browser.External href ->
-          ( model, Navigation.load href )
+                Browser.External href ->
+                    ( model, Navigation.load href )
 
-    UrlChanged url ->
+        UrlChanged url ->
             ( { model | route = Routes.matchedRoute url }
             , Cmd.none
             )
-    DefaultLayoutMsg _ -> 
-        (
-            model, Cmd.none)
+        
+        ContentMsg subMsg -> 
+            let
+                ( subModel, subCmd ) =
+                    Content.update subMsg model.contentModel
+            in
+            ( { model | contentModel = subModel }, Cmd.none)
     
-    EmptyLayoutMsg _ -> 
-        (model, Cmd.none)
-
 
 ---- VIEW ----
 view : Model -> Browser.Document Msg
 view model =
-    let
-        viewLayout toMsg layoutView layoutModel =
-            Html.map toMsg <| layoutView model.route layoutModel
-    in
-    { title =
-        model.title
-    , body = 
-        [
-            case model.route of
-                -- here goes other routes that uses different layout, by default every route will use DefaultLayout 
-                Routes.Home -> 
-                    viewLayout EmptyLayoutMsg EmptyLayout.view model.emptyLayoutModel
-                _ -> 
-                    viewLayout DefaultLayoutMsg DefaultLayout.view model.defaultLayoutModel
-        ]
-    }
-
+    -- { title =
+    --     model.title
+    -- , body = 
+        -- [ 
+            Html.map ContentMsg <| Content.view model.route model.contentModel 
+    --     ]
+    -- }
 
 -- SUBSCRIPTION
 subscriptions : Model -> Sub Msg
