@@ -18,11 +18,10 @@ type alias Model =
 init : () -> Url.Url -> Navigation.Key -> ( Model, Cmd Msg )
 init _ url key =
     let
-        title = getTitleFromRoute url
         ( contentModel, contentCmd ) = Content.init
     in
     ( 
-      { title = title
+      { title = "Elm Boiler"
       , route = Routes.matchedRoute url
       , key = key
       , contentModel = contentModel
@@ -65,13 +64,14 @@ update msg model =
 ---- VIEW ----
 view : Model -> Browser.Document Msg
 view model =
-    -- { title =
-    --     model.title
-    -- , body = 
-        -- [ 
-            Html.map ContentMsg <| Content.view model.route model.contentModel 
-    --     ]
-    -- }
+    let
+      { title, body } = 
+                Content.view model.route model.contentModel
+    in
+    { title = title ++ " | " ++ model.title
+    , body = [ Html.map ContentMsg <| body ]
+    }
+
 
 -- SUBSCRIPTION
 subscriptions : Model -> Sub Msg
@@ -90,14 +90,3 @@ main =
         , onUrlRequest = UrlRequested
         , onUrlChange = UrlChanged
         }
-        
-
-getTitleFromRoute : Url.Url -> String
-getTitleFromRoute url =
-    case Routes.matchedRoute url of
-        Routes.NotFound ->   
-            "Not Found"
-        Routes.Home ->
-            "home"
-        Routes.About ->
-            "about"

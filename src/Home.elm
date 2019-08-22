@@ -4,7 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 -- import Layouts.DefaultLayout as DefaultLayout
--- import Layouts.EmptyLayout as EmptyLayout
+import Layouts.EmptyLayout as EmptyLayout
 
 import Components.UI.Container as Container
 import Components.UI.Row as Row
@@ -74,7 +74,8 @@ update msg model =
             )
 
 
-view : Model -> Html Msg
+-- view : Model -> List (Html Msg)
+view : Model -> EmptyLayout.Details Msg
 view model =
     let
         ( titleErrorMsg, contentErrorMsg ) =
@@ -82,30 +83,35 @@ view model =
             , getContentErrorMessage model.error
             )
     in
-    Container.view (Container.Config [ class "full-vh" ] 
-    [
-        Row.view (Row.Config [ class " full-vh" ]
-        [ 
-            Col.view (Col.Config Col.MD 6 (Col.Offset Col.MD 3) [ class "ta-center" ]
-            [ h1[class "thin mt-7", style "fontSize" "3em", style "color" "#b5b0b0" ][ text "TODO" ]
-            , 
-                div [class "text-align-sm-l mt-5"]
-                [ p[] [ text "Add new task" ]
-                , Html.map TitleInputMsg 
-                    <| TextInput.view model.titleInput
-                        { placeholder = "Enter a value"
-                        , validationRules =
-                            { lengthRules = TextInput.EmptyAllowed
-                            , valueRules = TextInput.Alphanumeric
-                            , textFormat = Just TextInput.Lowercase
+    { title = "hhhhh" 
+    , attrs = []
+    , kids = [    
+        Container.view (Container.Config [ class "full-vh" ] 
+        [
+            Row.view (Row.Config [ class " full-vh" ]
+            [ 
+                Col.view (Col.Config Col.MD 6 (Col.Offset Col.MD 3) [ class "ta-center" ]
+                [ h1[class "thin mt-7", style "fontSize" "3em", style "color" "#b5b0b0" ][ text "TODO" ]
+                , 
+                    div [class "text-align-sm-l mt-5"]
+                    [ p[] [ text "Add new task" ]
+                    , Html.map TitleInputMsg 
+                        <| TextInput.view model.titleInput
+                            { placeholder = "Enter a value"
+                            , validationRules =
+                                { lengthRules = TextInput.EmptyAllowed
+                                , valueRules = TextInput.Alphanumeric
+                                , textFormat = Just TextInput.Lowercase
+                                }
                             }
-                        }
-                ]
+                    ]
 
+                ])
             ])
         ])
-    ])
 
+        ]
+    }
 
 
 
