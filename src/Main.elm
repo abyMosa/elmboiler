@@ -1,4 +1,5 @@
 module Main exposing (..)
+
 import Browser
 import Html exposing (Html, text, div, h1, img, b, a, ul, li)
 import Html.Attributes exposing (src, class, href)
@@ -69,7 +70,7 @@ view model =
                 Content.view model.route model.contentModel
     in
     { title = title ++ " | " ++ model.title
-    , body = [ Html.map ContentMsg <| body ]
+    , body = List.map (\ a -> Html.map ContentMsg <| a ) body 
     }
 
 

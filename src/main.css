@@ -1343,17 +1343,44 @@
     -webkit-transition-timing-function:cubic-bezier(0.190, 1.000, 0.220, 1.000);
        -moz-transition-timing-function:cubic-bezier(0.190, 1.000, 0.220, 1.000);
             transition-timing-function:cubic-bezier(0.190, 1.000, 0.220, 1.000);
+}body{
+    display:-webkit-box;
+    display:-webkit-flex;
+    display:-moz-box;
+    display:-ms-flexbox;
+    display:flex;
+    min-height:100vh;
+    -webkit-box-orient:vertical;
+    -webkit-box-direction:normal;
+    -webkit-flex-direction:column;
+       -moz-box-orient:vertical;
+       -moz-box-direction:normal;
+        -ms-flex-direction:column;
+            flex-direction:column;
 }.app{
     -webkit-box-sizing:border-box;
        -moz-box-sizing:border-box;
             box-sizing:border-box;
     width:100%;
     margin:0px auto;
+    -webkit-box-flex:1;
+    -webkit-flex:1;
+       -moz-box-flex:1;
+        -ms-flex:1;
+            flex:1;
 }.app.emptylayout{
-    min-height:100vh;
     background-color:#e5e5e5;
+    -webkit-box-flex:1;
+    -webkit-flex-grow:1;
+       -moz-box-flex:1;
+        -ms-flex-positive:1;
+            flex-grow:1;
 }.defaultlayout{
-    min-height:100vh;
+    -webkit-box-flex:1;
+    -webkit-flex-grow:1;
+       -moz-box-flex:1;
+        -ms-flex-positive:1;
+            flex-grow:1;
 }@media screen and (min-width: 1601px){
             .container{
                 max-width:1400px;

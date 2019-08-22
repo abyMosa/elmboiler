@@ -1,15 +1,19 @@
+body{
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
 .app{
     box-sizing: border-box;
     width: 100%;
     margin: 0px auto;
-    
-    /* min-height: 100vh; */
+    flex: 1;
 }
 .app.emptylayout{
-    min-height: 100vh;
     background-color: #e5e5e5;
+    flex-grow: 1;
 }
 
 .defaultlayout{
-    min-height: 100vh;
+    flex-grow: 1;
 }

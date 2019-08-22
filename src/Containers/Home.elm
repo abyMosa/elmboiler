@@ -1,10 +1,8 @@
-module Home exposing (..)
+module Containers.Home exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
--- import Layouts.DefaultLayout as DefaultLayout
-import Layouts.EmptyLayout as EmptyLayout
 
 import Components.UI.Container as Container
 import Components.UI.Row as Row
@@ -75,7 +73,7 @@ update msg model =
 
 
 -- view : Model -> List (Html Msg)
-view : Model -> EmptyLayout.Details Msg
+view : Model -> { title: String, attrs: List(Attribute Msg), kids: List(Html Msg) }
 view model =
     let
         ( titleErrorMsg, contentErrorMsg ) =
