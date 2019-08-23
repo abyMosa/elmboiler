@@ -1,4 +1,4 @@
-module Containers.Home exposing (..)
+module Pages.Home exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -71,8 +71,6 @@ update msg model =
             , Cmd.map TitleInputMsg subCmd
             )
 
-
--- view : Model -> List (Html Msg)
 view : Model -> { title: String, attrs: List(Attribute Msg), kids: List(Html Msg) }
 view model =
     let
@@ -84,11 +82,11 @@ view model =
     { title = "hhhhh" 
     , attrs = []
     , kids = [    
-        Container.view (Container.Config [ class "full-vh" ] 
+        Container.view [] 
         [
-            Row.view (Row.Config [ class " full-vh" ]
+            Row.view []
             [ 
-                Col.view (Col.Config Col.MD 6 (Col.Offset Col.MD 3) [ class "ta-center" ]
+                Col.view (Col.Config Col.MD 6 ( Just (Col.Offset Col.MD 3)) [ class "ta-center" ] )
                 [ h1[class "thin mt-7", style "fontSize" "3em", style "color" "#b5b0b0" ][ text "TODO" ]
                 , 
                     div [class "text-align-sm-l mt-5"]
@@ -103,10 +101,9 @@ view model =
                                 }
                             }
                     ]
-
-                ])
-            ])
-        ])
+                ]
+            ]
+        ]
 
         ]
     }

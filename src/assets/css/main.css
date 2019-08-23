@@ -12,3 +12,5 @@
 
 @import './modules/app.css';
 @import './modules/empty-layout.css';
+@import './modules/navigationItems.css';
+@import './modules/header.css';

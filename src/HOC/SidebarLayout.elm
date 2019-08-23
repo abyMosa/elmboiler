@@ -1,4 +1,4 @@
-module HOC.DefaultLayout exposing (..)
+module HOC.SidebarLayout exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -17,9 +17,9 @@ view : (a -> msg) ->  Details a -> { title: String, body: List(Html msg) }
 view contentMsg details =
     { title = details.title
     , body = 
-        [ Header.view ( Header.Config False [] )
+        [ Header.view ( Header.Config True [] )
         , Html.map contentMsg <| 
-                div (class "defaultlayout" :: details.attrs) details.kids
+                div (class "app sidebarLayout" :: details.attrs) details.kids
         , Footer.view
         ]
     }

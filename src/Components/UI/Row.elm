@@ -9,11 +9,6 @@ type alias Config msg =
     }
 
 
-view : Config msg -> Html msg
-view config =
-    div (class "layout" :: config.attr ) config.kids
-
--- view : (a-> msg) -> Config a -> Html msg
--- view toMsg config =
---     Html.map toMsg <|
---         div (class "container" :: config.attr ) config.kids
+view : List ( Attribute msg ) -> List ( Html msg ) -> Html msg
+view attr kids =
+    div (class "layout" :: attr ) kids

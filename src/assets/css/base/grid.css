@@ -58,9 +58,10 @@
                     &.gutter-$(gut) > .col--$(var)--$(val){
                         @mixin make-col-with-gutter $val, $gut;
                     }
-                    &.fstart-gutter-$(gut) {
+                    &.fstart-gutter-$(gut){
+                        justify-content: flex-start;
                         & > .col--$(var)--$(val){
-                            @mixin make-col-with-fstart-gutter $val, $gut;
+                            @mixin make-col-with-gutter-flex-start $val, $gut;
                         }
                     }
                 }

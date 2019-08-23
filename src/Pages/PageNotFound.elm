@@ -1,4 +1,4 @@
-module Containers.PageNotFound exposing (..)
+module Pages.PageNotFound exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)

@@ -11,6 +11,7 @@ import Url.Parser.Query as Query
 type Route
     = Home 
     | About 
+    | Todo
     | NotFound
 
 
@@ -19,7 +20,8 @@ type Route
 matchRoute : Url.Parser (Route -> a) a
 matchRoute =   
     Url.oneOf
-        [ Url.map About <| Url.s "about"
+        [ Url.map Todo <| Url.s "todo"
+        , Url.map About <| Url.s "about"
         , Url.map Home <| Url.top
         ]
 

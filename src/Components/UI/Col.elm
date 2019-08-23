@@ -6,9 +6,8 @@ import Html.Attributes exposing (..)
 type alias Config msg =
     { screen : Screen
     , col : Int
-    , offset: Offset
+    , offset : Maybe Offset
     , attr : List ( Attribute msg )
-    , kids : List ( Html msg )
     }
 
 type alias Offset = 
@@ -22,24 +21,28 @@ type Screen
     | XL
     | RT
 
-view : Config msg -> Html msg
-view config =
+view : Config msg -> List ( Html msg ) -> Html msg
+view config kids =
     let
         
         size = 
             getScreenStr config.screen
             
-        offsetSize =
-            getScreenStr config.offset.screen
-            
+        -- offsetSize =
+        offsetClass =
+            case config.offset of
+                Just offset ->
+                    "col--"++ getScreenStr offset.screen ++"--"++ String.fromInt offset.col++"--offset"
+                Nothing ->
+                    ""
+
         colClass = "col--"++size++"--"++ String.fromInt config.col
-        offsetClass = "col--"++offsetSize++"--"++ String.fromInt config.offset.col++"--offset"
 
         classes = String.join " " ["col", colClass, offsetClass]
 
         attrs = class classes :: config.attr
     in
-    div (attrs) config.kids
+    div (attrs) kids
 
 
 getScreenStr : Screen -> String

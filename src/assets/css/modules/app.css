@@ -8,6 +8,7 @@ body{
     width: 100%;
     margin: 0px auto;
     flex: 1;
+    flex-grow: 1;
 }
 .app.emptylayout{
     background-color: #e5e5e5;
