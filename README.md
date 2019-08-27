@@ -1,6 +1,6 @@
 Based on evan package.elm-lang.org of structuring wrapper layout component with a details Record as
 
-
+```sh
 view : (a -> msg) -> Details a -> Browser.Document msg
 view toMsg details =
   { title =
@@ -13,6 +13,7 @@ view toMsg details =
       , viewFooter
       ]
   }
+```
 
 # Elm App
 
