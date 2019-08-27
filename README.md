@@ -1,3 +1,19 @@
+Based on evan package.elm-lang.org of structuring wrapper layout component with a details Record as
+
+
+view : (a -> msg) -> Details a -> Browser.Document msg
+view toMsg details =
+  { title =
+      details.title
+  , body =
+      [ viewHeader details.header
+      , lazy viewWarning details.warning
+      , Html.map toMsg <|
+          div (class "center" :: details.attrs) details.kids
+      , viewFooter
+      ]
+  }
+
 # Elm App
 
 This project is bootstrapped with [Create Elm App](https://github.com/halfzebra/create-elm-app).
