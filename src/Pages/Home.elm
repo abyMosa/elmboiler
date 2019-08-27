@@ -71,42 +71,35 @@ update msg model =
             , Cmd.map TitleInputMsg subCmd
             )
 
-view : Model -> { title: String, attrs: List(Attribute Msg), kids: List(Html Msg) }
+view : Model -> List (Html Msg) 
 view model =
-    let
-        ( titleErrorMsg, contentErrorMsg ) =
-            ( getTitleErrorMessage model.error
-            , getContentErrorMessage model.error
-            )
-    in
-    { title = "hhhhh" 
-    , attrs = []
-    , kids = [    
-        Container.view [] 
-        [
-            Row.view []
-            [ 
-                Col.view (Col.Config Col.MD 6 ( Just (Col.Offset Col.MD 3)) [ class "ta-center" ] )
-                [ h1[class "thin mt-7", style "fontSize" "3em", style "color" "#b5b0b0" ][ text "TODO" ]
-                , 
-                    div [class "text-align-sm-l mt-5"]
-                    [ p[] [ text "Add new task" ]
-                    , Html.map TitleInputMsg 
-                        <| TextInput.view model.titleInput
-                            { placeholder = "Enter a value"
-                            , validationRules =
-                                { lengthRules = TextInput.EmptyAllowed
-                                , valueRules = TextInput.Alphanumeric
-                                , textFormat = Just TextInput.Lowercase
-                                }
+    [
+        Row.view []
+        [ 
+            -- Col.view (Col.Config Col.MD 6 ( Just (Col.Offset Col.MD 3)) [ class "ta-center" ] )
+            Col.view
+                { screen = Col.MD
+                , col = 26
+                , offset = Just (Col.Offset Col.MD 3)
+                , attr = [ class "ta-center" ]
+                }
+            [ h1[class "thin mt-7", style "fontSize" "3em", style "color" "#b5b0b0" ][ text "TODO" ]
+            , 
+                div [class "text-align-sm-l mt-5"]
+                [ p[] [ text "Add new task" ]
+                , Html.map TitleInputMsg 
+                    <| TextInput.view model.titleInput
+                        { placeholder = "Enter a value"
+                        , validationRules =
+                            { lengthRules = TextInput.EmptyAllowed
+                            , valueRules = TextInput.Alphanumeric
+                            , textFormat = Just TextInput.Lowercase
                             }
-                    ]
+                        }
                 ]
             ]
         ]
-
-        ]
-    }
+    ]
 
 
 

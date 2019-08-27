@@ -46,59 +46,47 @@ getClasses config =
 
 addThemeClasses : Config msg -> List String -> List String
 addThemeClasses config classes =
-    let
-        value = 
-            case config.theme of
-                Primary ->
-                    List.append classes ["primary"]
-                Error ->
-                    List.append classes ["error"]
-                Info ->
-                    List.append classes ["info"]
-                Warning ->
-                    List.append classes ["warning"]
-                Dark ->
-                    List.append classes ["dark"]
-                Success ->
-                    List.append classes ["success"]
-                Indigo ->
-                    List.append classes ["indigo"]
-                DarkGray ->
-                    List.append classes ["darkGray"]
-
-    in
-    value
+    case config.theme of
+        Primary ->
+            List.append classes ["primary"]
+        Error ->
+            List.append classes ["error"]
+        Info ->
+            List.append classes ["info"]
+        Warning ->
+            List.append classes ["warning"]
+        Dark ->
+            List.append classes ["dark"]
+        Success ->
+            List.append classes ["success"]
+        Indigo ->
+            List.append classes ["indigo"]
+        DarkGray ->
+            List.append classes ["darkGray"]
 
 addElivationClasses : Config msg -> List String -> List String
 addElivationClasses config classes =
-    let
-        value = 
-            case config.elivation of
-                Just elv ->
-                    case elv of
-                        1 ->
-                            List.append classes ["ab-toolbar-elivated"]
-                        2 ->
-                            List.append classes ["ab-toolbar-elivated2"]
-                        _ -> 
-                            List.append classes ["ab-toolbar-elivated"++ String.fromInt elv]
-                Nothing -> 
-                    List.append classes [""]
-    in
-    value
+    case config.elivation of
+        Just elv ->
+            case elv of
+                1 ->
+                    List.append classes ["ab-toolbar-elivated"]
+                2 ->
+                    List.append classes ["ab-toolbar-elivated2"]
+                _ -> 
+                    List.append classes ["ab-toolbar-elivated"++ String.fromInt elv]
+        Nothing -> 
+            List.append classes [""]
+
 
 addSizeClasses : Config msg -> List String -> List String
 addSizeClasses config classes =
-    let
-        value = 
-            case config.size of
-                Just size ->
-                    case size of
-                        Lg ->
-                            List.append classes ["ab-toolbar--large"]
-                        Sm ->
-                            List.append classes ["ab-toolbar-small"]
-                Nothing -> 
-                    List.append classes [""]
-    in
-    value
+    case config.size of
+        Just size ->
+            case size of
+                Lg ->
+                    List.append classes ["ab-toolbar--large"]
+                Sm ->
+                    List.append classes ["ab-toolbar-small"]
+        Nothing -> 
+            List.append classes [""]

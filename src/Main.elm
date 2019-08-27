@@ -7,11 +7,11 @@ import Browser.Navigation as Navigation
 import Url
 import Routes
 import Content exposing (..)
+import Extras.PageTitle as PageTitle
 
 ---- MODEL ----
 type alias Model =
-    { title : String
-    , route: Routes.Route
+    { route: Routes.Route
     , key : Navigation.Key
     , contentModel : Content.Model
     }
@@ -22,8 +22,7 @@ init _ url key =
         ( contentModel, contentCmd ) = Content.init
     in
     ( 
-      { title = "Elm Boiler"
-      , route = Routes.matchedRoute url
+      { route = Routes.matchedRoute url
       , key = key
       , contentModel = contentModel
       }
@@ -65,12 +64,8 @@ update msg model =
 ---- VIEW ----
 view : Model -> Browser.Document Msg
 view model =
-    let
-      { title, body } = 
-                Content.view model.route model.contentModel
-    in
-    { title = title ++ " | " ++ model.title
-    , body = List.map (\ a -> Html.map ContentMsg <| a ) body 
+    { title = PageTitle.get model.route ++ " | Elm Boiler"
+    , body = List.map (Html.map ContentMsg) <| Content.view model.route model.contentModel
     }
 
 

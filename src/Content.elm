@@ -74,20 +74,14 @@ update msg model =
             ( model, Cmd.none )
         
 
-view :Routes.Route -> Model -> { title: String, body: List(Html Msg) }
+view :Routes.Route -> Model -> List (Html Msg)
 view route model =
-    let
-        {title, body} =
-            case route of
-                Home ->
-                    DefaultLayout.view HomeMsg (Home.view model.homeModel)
-                About -> 
-                    DefaultLayout.view AboutMsg (About.view model.aboutModel)
-                Todo -> 
-                    SidebarLayout.view TodoMsg (Todo.view model.todoModel)
-                NotFound -> 
-                    EmptyLayout.view NotFoundMsg (NotFound.view model.notFoundModel)
-    in
-    { title = title
-    , body = body
-    }
+     case route of
+        Home ->
+            DefaultLayout.view HomeMsg (Home.view model.homeModel)
+        About -> 
+            DefaultLayout.view AboutMsg (About.view model.aboutModel)
+        Todo -> 
+            SidebarLayout.view TodoMsg (Todo.view model.todoModel)
+        NotFound -> 
+            EmptyLayout.view NotFoundMsg (NotFound.view model.notFoundModel)

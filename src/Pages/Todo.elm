@@ -27,13 +27,8 @@ update msg model =
     ( model, Cmd.none )
 
 
-view : Model -> { title: String, attrs: List(Attribute Msg), kids: List(Html Msg) }
+view : Model -> List(Html Msg)
 view model =
-    { title = "TODO page" 
-        , attrs = []
-        , kids =
-        [
+    [
 
-
-        ]
-    }
+    ]
